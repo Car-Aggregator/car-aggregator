@@ -10,33 +10,33 @@ const trueCarScraper = require('../scrapers/trueCarScraper.js');
 const pgController = {};
 
 pgController.getCarsComData = async (req, res, next) => {
- //console.log(req.params)
- const { make, model, minYear, zip } = req.params;
- res.locals.carsComData = await carsDotComScraper(make, model, minYear, zip);
+  //console.log(req.params)
+  const { make, model, minYear, zip } = req.params;
+  res.locals.carsComData = await carsDotComScraper(make, model, minYear, zip);
 
- return next();
+  return next();
 }
 
 pgController.getAutoTraderData = async (req, res, next) => {
   const { make, model, minYear, zip } = req.params;
   res.locals.autoTraderData = await autoTraderScraper(make, model, minYear, zip);
- 
-  return next();
- }
 
- pgController.getCarGurusData = async (req, res, next) => {
+  return next();
+}
+
+pgController.getCarGurusData = async (req, res, next) => {
   const { make, model, minYear, zip } = req.params;
   res.locals.carGurusData = await carGurusScraper(make, model, minYear, zip);
- 
-  return next();
- }
 
- pgController.getTrueCarData = async (req, res, next) => {
+  return next();
+}
+
+pgController.getTrueCarData = async (req, res, next) => {
   const { make, model, minYear, zip } = req.params;
   res.locals.trueCarData = await trueCarScraper(make, model, minYear, zip);
- 
+
   return next();
- }
+}
 
 // pgController.getCarGuruData = (req, res, next) => {
 //   const { make, model, minYear, zip } = req.body;
@@ -46,7 +46,7 @@ pgController.getAutoTraderData = async (req, res, next) => {
 
 // APi (/asdasd/, Carsdotcomcontroller, cargurucontroller, => {
 //   res.locals.carguru, res.locals.carsdotcome 
-  
+
 // })
 
 pgController.insertCarsComData = async (req, res, next) => {
@@ -67,30 +67,33 @@ pgController.insertCarsComData = async (req, res, next) => {
 
   //------------------- CONCAT version below
 
-  let queryStr = `INSERT INTO cars(price, image, mileage, year, make, model, url, zip, date) VALUES`                 
+  // Caching the search results of each car into the database
+  let queryStr = `INSERT INTO cars(price, image, mileage, year, make, model, url, zip, date) VALUES`
+  // scraper returns an array full of car objects that are decusontructed   
   carsComData.forEach(car => {
     console.log('hello we are in the loop pls help')
     const { price, image, mileage, year, make, model, url, zip, date } = car;
-    
+
     queryStr += `(${price}, ${image}, ${mileage}, ${year}, ${make}, ${model}, ${url}, ${zip}, ${date}),`
   })
   queryStr = queryStr.slice(0, -1);
   queryStr += ';'
   //queryStr = queryStr.replace(/.$/, ';');
-  console.log('last char is:', queryStr[queryStr.length-1]);
+  console.log('last char is:', queryStr[queryStr.length - 1]);
 
+  // awaitng response from database
   await db.query(queryStr)
-      .then(res => {
-        console.log(res.rows)
-        return next()
-      })
-      .catch(err => next(err));
+    .then(res => {
+      console.log(res.rows) // rows is at times, how response data comes back from SQL DB 
+      return next()
+    })
+    .catch(err => next(err));
 }
 
 
 // add controllers
 pgController.getSavedData = (req, res, next) => {
-  const {make, model} = req.params
+  const { make, model } = req.params
   // const values = [make,model];
   const queryStr = `SELECT c.make AS make, c.model, p.year, p.date, p.price, p.url
   FROM prices AS p
@@ -99,7 +102,7 @@ pgController.getSavedData = (req, res, next) => {
   WHERE c.make = "Honda";`
   //I'm having problems with the query string, if you get rid of everything after the 'WHERE' it will return all two tables mixed, but if I specify what I just want the make Honda it crashes
 
-   db.query(queryStr)
+  db.query(queryStr)
     .then(carInfo => {
       console.log(carInfo.rows)
       return next();

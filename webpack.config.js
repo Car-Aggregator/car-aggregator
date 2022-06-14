@@ -1,4 +1,4 @@
-const path = require ('path');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -9,45 +9,46 @@ module.exports = {
         filename: 'bundle.js',
     },
     plugins: [
-        new HtmlWebpackPlugin({template: 'index.html'}),
+        new HtmlWebpackPlugin({ template: 'index.html' }),
     ],
     module: {
         rules: [
-                {
-                    test: /\.jsx?/,
-                    exclude: /node_modules/,
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
-                        plugins: ['@babel/plugin-transform-runtime', '@babel/transform-async-to-generator'],
-                    }
-                },
-                {
-                    test: /.(css|scss)$/,
-                    exclude: /node_modules/,
-                    use: ['style-loader', 'css-loader', 'sass-loader'],
-                },
-                {
-                    test: /\.png|svg|jpg|gif$/,
-                    use: ['file-loader'],
-                },
+            {
+                test: /\.jsx?/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-react'],
+                    plugins: ['@babel/plugin-transform-runtime', '@babel/transform-async-to-generator'],
+                }
+            },
+            {
+                test: /.(css|scss)$/,
+                exclude: /node_modules/,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.png|svg|jpg|gif$/,
+                use: ['file-loader'],
+            },
 
         ]
     },
     devServer: {
         static: {
-          directory: path.resolve(__dirname, 'build'),
-          publicPath: '/build'
+            directory: path.resolve(__dirname, 'build'),
+            publicPath: '/build'
         },
-        port: 8888,
+        port: 8080,
         compress: true,
         hot: true,
+        liveReload: true,
+        historyApiFallback: true, // fall back to entry path every time it loads for react router
         proxy: {
-          '/api' : 'http://localhost:3000',
-          // '/' : 'http://localhost:3000/images/'
+            '/': 'http://localhost:3000'
         }
-     },
-     resolve: {
-      extensions: ['.js', '.json', '.jsx'],
+    },
+    resolve: {
+        extensions: ['.js', '.json', '.jsx'],
     },
 };
