@@ -3,6 +3,7 @@ const pgController = require('../controllers/pgController');
 const router = express.Router();
 
 // routers to handle requests and invoke middleware functions that get executed by controller
+// '/scrape/:make-:model-:minYear-:zip'
 router.get('/scrape/:make/:model/:minYear/:zip',
   pgController.getCarsComData,
   pgController.getTrueCarData,
