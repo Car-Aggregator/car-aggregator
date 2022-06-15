@@ -3,6 +3,7 @@ import MainContainer from './containers/MainContainer'
 import { Routes, Route } from 'react-router-dom';
 // import Trends from './containers/Trends';
 import CarsInfo from './containers/CarsInfo';
+import SignIn from './Components/SignIn';
 
 const App = () => (
     <div id='app'>
@@ -10,11 +11,11 @@ const App = () => (
         <Routes>
             <Route
                 exact path="/"
-                element={<CarsInfo />}
+                element={<SignIn />}
             />
             {/* <Route
-                exact path="/trends"
-                element={<Trends />}
+                exact path="/signin"
+                element={<SignIn />}
             /> */}
         </Routes>
     </div>

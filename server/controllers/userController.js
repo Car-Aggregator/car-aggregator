@@ -10,6 +10,7 @@ userController.findUser = async (req, res, next) => {
     const queryStr = 'SELECT * FROM users WHERE email=$1 AND password=$2'
     const queryValues = [email, password];
     const user = await db.query(queryStr, queryValues)
+    console.log('user-->', user)
     res.locals.user = user.rows;
     return next();
   }
@@ -29,6 +30,7 @@ userController.createUser = async (req, res, next) => {
     const queryValues = [email, password];
     const user = await db.query(queryStr, queryValues)
     res.locals.user = user.rows;
+    console.log('user-->', user)
     return next();
   }
   catch (err) {
