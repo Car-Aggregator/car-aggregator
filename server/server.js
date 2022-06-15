@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
  * define route handlers
  */
 
-app.use('/login', userRouter);
+app.use('/user', userRouter);
 app.use('/getcars', getCarsRouter);
 app.use('/favorites', favoritesRouter);
 
