@@ -1,53 +1,6 @@
 const db = require('../models/pgModels.js');
-const puppeteer = require('puppeteer');
-// carsDotComScraper = require('../scrapers/carsDotComScraper')
-const carsDotComScraper = require('../scrapers/carsDotComScraper.js')
-const autoTraderScraper = require('../scrapers/autoTraderScraper.js')
-const carGurusScraper = require('../scrapers/carGurusScraper.js');
-const trueCarScraper = require('../scrapers/trueCarScraper.js');
-
 
 const pgController = {};
-
-pgController.getCarsComData = async (req, res, next) => {
-  //console.log(req.params)
-  const { make, model, minYear, zip } = req.params;
-  res.locals.carsComData = await carsDotComScraper(make, model, minYear, zip);
-
-  return next();
-}
-
-pgController.getAutoTraderData = async (req, res, next) => {
-  const { make, model, minYear, zip } = req.params;
-  res.locals.autoTraderData = await autoTraderScraper(make, model, minYear, zip);
-
-  return next();
-}
-
-pgController.getCarGurusData = async (req, res, next) => {
-  const { make, model, minYear, zip } = req.params;
-  res.locals.carGurusData = await carGurusScraper(make, model, minYear, zip);
-
-  return next();
-}
-
-pgController.getTrueCarData = async (req, res, next) => {
-  const { make, model, minYear, zip } = req.params;
-  res.locals.trueCarData = await trueCarScraper(make, model, minYear, zip);
-
-  return next();
-}
-
-// pgController.getCarGuruData = (req, res, next) => {
-//   const { make, model, minYear, zip } = req.body;
-//   res.locals.carData.carGuruData = carGuruScraper(make, model, minYear, zip)
-//   return next()
-//  }
-
-// APi (/asdasd/, Carsdotcomcontroller, cargurucontroller, => {
-//   res.locals.carguru, res.locals.carsdotcome 
-
-// })
 
 pgController.insertCarsComData = async (req, res, next) => {
   const { carsComData } = res.locals;
@@ -109,5 +62,3 @@ pgController.getSavedData = (req, res, next) => {
     })
     .catch(err => (next(err)));
 }
-
-module.exports = pgController;
