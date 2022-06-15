@@ -8,16 +8,16 @@ import Typography from '@mui/material/Typography';
 export default function CarsList(props) {
   console.log('carsArr', props)
 
-  const carsItems = []; 
-  
+  const carsItems = [];
+
   props.carsArr.forEach(
     car => {
       carsItems.push(<ListItem>
-        <CarsCard carObj={car}/>
+        <CarsCard carObj={car} />
       </ListItem>)
     }
   )
-  
+
   return (
     <List
       sx={{
@@ -31,21 +31,21 @@ export default function CarsList(props) {
       }}
       subheader={<li />}
     >
-    <ListSubheader sx={{
-      display: "flex",
-      justifyContent: 'center',
+      <ListSubheader sx={{
+        display: "flex",
+        justifyContent: 'center',
         padding: '10px 0',
         maxWidth: 500,
         border: '1px solid #e0e0e0',
         boxShadow: '0px 11px 10px -7px rgba(194,194,194,0.66)'
-    }}>
-      <Typography variant="h4" sx={{
-        color: 'black'
       }}>
-        {props.name}
-      </Typography>
-    </ListSubheader>
-    {[carsItems]}
+        <Typography variant="h4" sx={{
+          color: 'black'
+        }}>
+          {props.name}
+        </Typography>
+      </ListSubheader>
+      {[carsItems]}
     </List>
   );
 }
