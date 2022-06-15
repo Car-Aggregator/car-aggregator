@@ -31,14 +31,27 @@ export default function CarsInfo() {
   }
 
   const fetching = () => {
-    fetch(`/getcars/scrape/${make}/${model}/${year}/${zip}`)
-      .then(response => response.json())
-      .then(data => {
-        setCarsCom(data.carsComData)
-        setAutoTrader(data.autoTraderData)
-        setTrueCar(data.trueCarData)
-      })
-      .catch(err => console.log(err))
+    // fetch(`/getcars/scrape/${make}/${model}/${year}/${zip}`)
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     setCarsCom(data.carsComData)
+    //     setAutoTrader(data.autoTraderData)
+    //     setTrueCar(data.trueCarData)
+    //   })
+    //   .catch(err => console.log(err))
+    fetch(`/getcars/scrapeCarCom/${make}/${model}/${year}/${zip}`)
+    .then(response => response.json())
+    .then(data => {
+      setCarsCom(data.carsComData)
+    })
+    .catch(err => console.log(err));
+
+    fetch(`/getcars/scrapePupAuto/${make}/${model}/${year}/${zip}`)
+    .then(response => response.json())
+    .then(data => {
+      setAutoTrader(data.autoTraderData)
+    })
+    .catch(err => console.log(err));
   }
 
 
