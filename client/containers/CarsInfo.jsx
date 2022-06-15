@@ -30,9 +30,8 @@ export default function CarsInfo() {
     setZip(e.target.value)
   }
 
-
   const fetching = () => {
-    fetch(`/api/scrape/${make}/${model}/${year}/${zip}`)
+    fetch(`/getcars/scrape/${make}/${model}/${year}/${zip}`)
       .then(response => response.json())
       .then(data => {
         setCarsCom(data.carsComData)
@@ -45,33 +44,33 @@ export default function CarsInfo() {
 
   return (
     <>
-     <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          margin: 2
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField onChange={updateMake} color="secondary" label="Make" variant="outlined" />
+        <TextField onChange={updateModel} id="outlined-basic" label="Model" variant="outlined" />
+        <TextField onChange={updateYear} id="outlined-basic" label="Minimum Year" variant="outlined" />
+        <TextField onChange={updateZip} id="outlined-basic" label="Zip" variant="outlined" />
+        <Button variant="contained" color="success" onClick={fetching}>Search</Button>
+      </Box>
+
+      <div style={{
         display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        margin: 2
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField onChange={updateMake} color="secondary" label="Make" variant="outlined" />
-      <TextField onChange={updateModel} id="outlined-basic" label="Model" variant="outlined" />
-      <TextField onChange={updateYear} id="outlined-basic" label="Minimum Year" variant="outlined" />
-      <TextField onChange={updateZip} id="outlined-basic" label="Zip" variant="outlined" />
-      <Button variant="contained" color="success" onClick={fetching}>Search</Button>
-    </Box>
-    
-    <div style={{
-      display: 'flex',
-      justifyContent: 'space-evenly'
-    }}>
-      <CarsList carsArr={carsCom} name={'Cars.com'}/>
-      <CarsList carsArr={autoTrader} name={'AutoTrader'}/>
-      <CarsList carsArr={trueCar} name={'True Car'} />
-    </div>
+        justifyContent: 'space-evenly'
+      }}>
+        <CarsList carsArr={carsCom} name={'Cars.com'} />
+        <CarsList carsArr={autoTrader} name={'AutoTrader'} />
+        <CarsList carsArr={trueCar} name={'True Car'} />
+      </div>
     </>
   )
 }
