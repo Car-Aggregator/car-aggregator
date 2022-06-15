@@ -18,11 +18,11 @@ Router.get('/scrape/:make/:model/:minYear/:zip',
 );
 Router.get('/scrapeCarCom/:make/:model/:minYear/:zip', scrapeController.getCarsComData, (req, res) => {
   res.status(200)
-  .json({carsComData: res.locals.carsComData})
+    .json({ carsComData: res.locals.carsComData })
 })
 Router.get('/scrapePupAuto/:make/:model/:minYear/:zip', scrapeController.getPupAutoTrader, (req, res) => {
   res.status(200)
-  .json({autoTraderData: res.locals.autoTraderData})
+    .json({ autoTraderData: res.locals.autoTraderData })
 })
 
 module.exports = Router;
