@@ -1,5 +1,7 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
 const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
+const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
+
 /*
 (async () => {
   const browser = await puppeteer.launch({headless : false});
@@ -42,13 +44,19 @@ const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
   await browser.close();
 }) ()
 */
-(async () => {
-    //const url = `https://www.autotrader.com/cars-for-sale/all-cars/${make.toLowerCase()}/${model.toLowerCase()}/${zip}?searchRadius=50&startYear=${minYear}&sortBy=derivedpriceASC&numRecords=50`
+const autoTraderPupSearch = (async (make, model, minYear,zip) => {
+  // const adblocker = AdblockerPlugin({blockTrackers: true});
+  //   puppeteer.use(adblocker);
+    const url = `https://www.autotrader.com/cars-for-sale/all-cars/${make.toLowerCase()}/${model.toLowerCase()}/${zip}?searchRadius=50&startYear=${minYear}&sortBy=derivedpriceASC&numRecords=25`
     //https://www.autotrader.com/cars-for-sale/all-cars/acura/ilx/33401?searchRadius=50&startYear=2020&sortBy=derivedprice&numRecords=25
     const browser = await puppeteer.launch({headless : false});
     const page = await browser.newPage();
     await page.setViewport({width: 1300, height: 1000});
-    await page.goto('https://www.autotrader.com/cars-for-sale/all-cars?zip=33401&makeCodeList=ACURA&modelCodeList=ILX', {waitUntil: 'load'});
+    
+    //await page.goto('https://www.autotrader.com/cars-for-sale/all-cars?zip=33401&makeCodeList=ACURA&modelCodeList=ILX', {waitUntil: 'load'});
+    //await page.goto(url, {waitUntil: 'load'});
+    await page.goto(url, {waitUntil: 'domcontentloaded'});
+    //await page.waitForTimeout(1000)
     await page.evaluate(_ => window.scrollTo(0,0));
     await scrollPageToBottom(page);
     const date = new Date();
@@ -76,10 +84,10 @@ const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
         "image": imageLinks[i],
         "mileage": Number(carMileage[i].replace(/\D/g, '')),
         "year": Number(carDescriptions[i].replace(/\D/g, '')),
-        "model": carDescriptions[i],
-        "make": carDescriptions[i],
-        "url": carLink[i],
-        "zip": "placeholder",
+        "model": model,
+        "make": make,
+        "url": carLink[i].slice(12),
+        "zip": zip,
         "date": actualDate
       })
     }
@@ -89,11 +97,15 @@ const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
     // console.log('carPrices-->', carPrices, carPrices.length);
     // console.log('carMileage-->', carMileage, carMileage.length);
     // console.log('carLink-->', carLink, carLink.length);
-    console.log(resultArray);
+    //console.log(resultArray.length);
 
-//IMPORTANT, THE FIRST ELEMENT SHOULD NOT BE INCLUDED BECAUSE THE FIRST SPONSORED LINK DOES NOT HAVE MILAGE
     await browser.close();
-  }) ()
+    console.log(resultArray);
+    return resultArray;
+//IMPORTANT, THE FIRST ELEMENT SHOULD NOT BE INCLUDED BECAUSE THE FIRST SPONSORED LINK DOES NOT HAVE MILAGE
+  })
+ //search('Acura', 'ILX', 2019, 33467).then(data => console.log(data));
+ module.exports = autoTraderPupSearch;
 
 
   /*

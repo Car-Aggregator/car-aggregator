@@ -7,7 +7,7 @@ const Router = express.Router();
 Router.get('/scrape/:make/:model/:minYear/:zip',
   scrapeController.getCarsComData,
   scrapeController.getTrueCarData,
-  scrapeController.getAutoTraderData,
+  scrapeController.getPupAutoTrader,
   // scrapeController.getCarGurusData,
   (req, res) => res.status(200).json({
     carsComData: res.locals.carsComData,
