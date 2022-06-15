@@ -17,5 +17,4 @@ Router.get('/scrape/:make/:model/:minYear/:zip',
   })
 );
 
-
 module.exports = Router;
