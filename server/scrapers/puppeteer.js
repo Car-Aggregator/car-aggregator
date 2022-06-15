@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const { scrollPageToBottom } = require('puppeteer-autoscroll-down');
 /*
 (async () => {
   const browser = await puppeteer.launch({headless : false});
@@ -45,33 +46,51 @@ const puppeteer = require('puppeteer');
 (async () => {
     const browser = await puppeteer.launch({headless : false});
     const page = await browser.newPage();
-    await page.goto('https://www.autotrader.com/cars-for-sale/all-cars?zip=33401&makeCodeList=ACURA&modelCodeList=ILX');
+    await page.setViewport({width: 1300, height: 1000});
+    await page.goto('https://www.autotrader.com/cars-for-sale/all-cars?zip=33401&makeCodeList=ACURA&modelCodeList=ILX', {waitUntil: 'load'});
+    await page.evaluate(_ => window.scrollTo(0,0));
+    await scrollPageToBottom(page);
+    const imageLinks = await page.$$eval('.img-responsive-scale', imgLinks => {
+        return imgLinks.map((i) => i.src);
+    });
+    const carDescriptions = await page.$$eval('.text-bold.text-size-400.text-size-sm-500.link-unstyled', carDescriptions => {
+        return carDescriptions.map((i) => i.innerText);
+    });
+    const carPrices = await page.$$eval('.first-price', carPrices => {
+        return carPrices.map((i) => i.innerText);
+    });
+
  
-    const grabParagraph = await page.evaluate(() =>{
-      //const pgTag = document.querySelector('.img-responsive-scale').src; //maybe take .alt too
-      //const pgTag = document.querySelectorAll('.img-responsive-scale'); //maybe take .alt too
-      const srcs = Array.from(
-          document.querySelectorAll(".img-responsive-scale")
-        ).map((image) => image.getAttribute("src"));
+    // const grabParagraph = await page.evaluate(() =>{
+        
+    //     scrollPageToBottom(page);
+    //   //const pgTag = document.querySelector('.img-responsive-scale').src; //maybe take .alt too
+    //   //const pgTag = document.querySelectorAll('.img-responsive-scale'); //maybe take .alt too
+    //   const srcs = Array.from(
+    //       document.querySelectorAll(".img-responsive-scale")
+    //     ).map((image) => image.getAttribute("src"));
         
       
    
-      //const innerText = document.querySelectorAll('.text-bold.text-size-400.text-size-sm-500.link-unstyled').innerText;
-      const innerText = document.querySelectorAll('.text-bold.text-size-400.text-size-sm-500.link-unstyled');
+    //   //const innerText = document.querySelectorAll('.text-bold.text-size-400.text-size-sm-500.link-unstyled').innerText;
+    //   const innerText = document.querySelectorAll('.text-bold.text-size-400.text-size-sm-500.link-unstyled');
   
-      const price = document.querySelector('.first-price').innerText;
-      const carDescription = [];
-      const imageArray = [];
-      innerText.forEach(tag => carDescription.push(tag.innerText));
-      //pgTag.forEach(tag => imageArray.push(tag.src));
+    //   const price = document.querySelector('.first-price').innerText;
+    //   const carDescription = [];
+    //   const imageArray = [];
+    //   innerText.forEach(tag => carDescription.push(tag.innerText));
+    //   //pgTag.forEach(tag => imageArray.push(tag.src));
       
-      //console.log(pgTag);
-      //console.log(innerText)
-      resultArray = []
-      //resultArray.push(pgTag, innerText, price);
-      return srcs;
-    })
+    //   //console.log(pgTag);
+    //   //console.log(innerText)
+    //   resultArray = []
+    //   //resultArray.push(pgTag, innerText, price);
+    //   return srcs;
+    // })
     //console.log('imgSrc--->', imgSrc)
-    console.log(grabParagraph)
+    console.log(imageLinks.length);
+    console.log(carDescriptions.length);
+    console.log(carPrices.length);
+
     await browser.close();
   }) ()
