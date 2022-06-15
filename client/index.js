@@ -4,6 +4,13 @@ import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import styles from './styles/styles.scss';
 
+render(
+    <Router>
+        <App />
+    </Router>,
+    document.getElementById('root')
+);
+
 // import React from 'react';
 // import reactDom from 'react-dom';
 // import { createRoot } from 'react-dom/client';
@@ -17,10 +24,5 @@ import styles from './styles/styles.scss';
 //     <BrowserRouter>
 //         <App />
 //     </BrowserRouter>
-// )
-render(
-    <Router>
-        <App />
-    </Router>,
-    document.getElementById('root')
-);
+// );
+
