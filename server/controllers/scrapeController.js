@@ -2,6 +2,7 @@ const carsDotComScraper = require('../scrapers/carsDotComScraper.js')
 const autoTraderScraper = require('../scrapers/autoTraderScraper.js')
 const carGurusScraper = require('../scrapers/carGurusScraper.js');
 const trueCarScraper = require('../scrapers/trueCarScraper.js');
+const autoTraderPupSearch = require('../scrapers/puppeteer.js');
 
 // Middleware functions for pointing to the scraper functions for each website
 const scrapeController = {};
@@ -61,6 +62,21 @@ scrapeController.getTrueCarData = async (req, res, next) => {
   catch (err) {
     return next({
       log: 'Error in scrapeController.getTrueCarData',
+      status: 502
+    });
+  }
+}
+
+scrapeController.getPupAutoTrader = async (req, res, next) => {
+  try {
+    const { make, model, minYear, zip } = req.params;
+    res.locals.autoTraderData = await autoTraderPupSearch(make, model, minYear, zip);
+    return next();
+  }
+
+  catch (err) {
+    return next({
+      log: 'Error in scrapeController.getPupAutoTrader',
       status: 502
     });
   }
