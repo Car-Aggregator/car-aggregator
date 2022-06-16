@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 import "../styles/styles.scss";
 import React, { useState } from "react";
@@ -70,3 +71,7 @@ function SignIn() {
 }
 
 export default SignIn;
+=======
+import React from "react";
+import axios from "axios";
+>>>>>>> max
