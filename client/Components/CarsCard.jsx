@@ -8,11 +8,24 @@ import axios from 'axios';
 
 export default function CarsCard(props) {
   const [id, setId] = useState(0);
+  console.log('props: ', props);
 
   function addFavorite() {
-    useEffect(() => {
-      const url = 'http://localhost:3000/favorites/addfavorite'
-      axios.post(url, props).then(res => {
+    const url = '/favorites/addfavorite';
+    const sendData = {
+      email: props.userState,
+      date: props.carObj.date,
+      image: props.carObj.image,
+      make: props.carObj.make,
+      mileage: props.carObj.mileage,
+      model: props.carObj.model,
+      price: props.carObj.price,
+      url: props.carObj.url,
+      year: props.carObj.year,
+      zip: props.carObj.zip
+    }
+    axios.post(url, sendData).then(res => {
+      useEffect(() => {
         setId(res.data);
       })
     })
@@ -21,7 +34,6 @@ export default function CarsCard(props) {
   return (
     <Card sx={{ maxWidth: 450 }}>
       <CardActionArea>
-        {/* component somewhere around here for favoriting will have a prop named id={id} onClick={addFavorite}*/}
         <CardMedia
           component="img"
           height="300"
@@ -78,10 +90,19 @@ export default function CarsCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions className='buttonContainer'>
+        <div className='buttonWrapper'>
         <Button size="small" color="primary">
           <a href={`https://www.${props.carObj.url}`} target="_blank" rel="noreferrer noopener">Check in the website</a>
         </Button>
+        <Button
+          className='favoriteButton'
+          id={id}
+          onClick={addFavorite}
+        >
+          Favorite
+        </Button>
+        </div>
       </CardActions>
     </Card>
   );

@@ -76,7 +76,6 @@ export default function CarsInfo() {
         noValidate
         autoComplete="off"
       >
-        <>{user}</>
         <TextField
           onChange={updateMake}
           color="secondary"
@@ -112,9 +111,9 @@ export default function CarsInfo() {
           justifyContent: "space-evenly",
         }}
       >
-        <CarsList carsArr={carsCom} name={"Cars.com"} />
-        <CarsList carsArr={autoTrader} name={"AutoTrader"} />
-        <CarsList carsArr={trueCar} name={"True Car"} />
+        <CarsList carsArr={carsCom} userState={userState} name={"Cars.com"} />
+        <CarsList carsArr={autoTrader} userState={userState} name={"AutoTrader"} />
+        <CarsList carsArr={trueCar} userState={userState} name={"True Car"} />
       </div>
     </>
   );
