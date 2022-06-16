@@ -3,11 +3,11 @@ import "../styles/styles.scss";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import { Button } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Button } from "@mui/material";
+import Box from "@mui/material/Box";
 
 function SignIn() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
@@ -21,22 +21,31 @@ function SignIn() {
       .then((res) => {
         console.log(res.status);
         console.log("here's res: ", res);
-        if (res.status === 200) {
-          navigate("/home");
+        if (res.data.length !== 0) {
+          navigate("/home", { state: { email } });
+        } else {
+          navigate("/");
         }
       });
   }
 
   function login() {
+    console.log(email, "email");
     axios
-      .get("/user/login", {
+      .post("/user/login", {
         email,
         password,
       })
       .then((res) => {
-        console.log(res.status);
-        if (res.status === 200) {
-          navigate("/home");
+        console.log(
+          "<><><><><><><<><>><><<>this is response:",
+          res,
+          "><><><><><>><><><><><><><><><><><><"
+        );
+        if (res.data.length !== 0) {
+          navigate("/home", { state: { email } });
+        } else {
+          navigate("/");
         }
       });
   }
