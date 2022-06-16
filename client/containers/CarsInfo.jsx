@@ -1,13 +1,12 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import CarsList from "../Components/CarsList";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import Stack from "@mui/material/Stack";
 import { useLocation } from "react-router-dom";
-
 
 export default function CarsInfo() {
   const [carsCom, setCarsCom] = useState([]);
@@ -17,7 +16,7 @@ export default function CarsInfo() {
   const [model, setModel] = useState("");
   const [year, setYear] = useState(2022);
   const [zip, setZip] = useState(10001);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState("");
 
   const updateMake = (e) => {
     setMake(e.target.value);
@@ -35,8 +34,8 @@ export default function CarsInfo() {
   const userState = location.state.email;
 
   useEffect(() => {
-    setUser(location.state.email)
-  },[])
+    setUser(location.state.email);
+  }, []);
 
   const fetching = () => {
     // fetch(`/getcars/scrape/${make}/${model}/${year}/${zip}`)
