@@ -1,22 +1,31 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import axios from 'axios';
 
 export default function CarsCard(props) {
-  console.log('hi1')
-  console.log('hi car price')
-  
-  return (
+  const [id, setId] = useState(0);
 
+  function addFavorite() {
+    useEffect(() => {
+      const url = 'http://localhost:3000/favorites/addfavorite'
+      axios.post(url, props).then(res => {
+        setId(res.data);
+      })
+    })
+  }
+
+  return (
     <Card sx={{ maxWidth: 450 }}>
       <CardActionArea>
+        {/* component somewhere around here for favoriting will have a prop named id={id} onClick={addFavorite}*/}
         <CardMedia
           component="img"
           height="300"
-          image={props.carObj.image ? props.carObj.image :"https://static.wikia.nocookie.net/0b6408dc-ead8-42d9-a639-94068519d635/scale-to-width/755"}
+          image={props.carObj.image ? props.carObj.image : "https://static.wikia.nocookie.net/0b6408dc-ead8-42d9-a639-94068519d635/scale-to-width/755"}
           alt="car photo"
         />
         <CardContent sx={{
@@ -27,44 +36,44 @@ export default function CarsCard(props) {
           justifyItems: 'space-arond',
           columnGap: 4
         }}>
-          <Typography 
-          sx={{
-            gridColumn: '1/2',
-            gridRow: '1/4',
-          }}
-          gutterBottom variant="h4" component="div">
+          <Typography
+            sx={{
+              gridColumn: '1/2',
+              gridRow: '1/4',
+            }}
+            gutterBottom variant="h4" component="div">
             {/* {console.log('car make', props.carObj.make)} */}
-            {`${props.carObj.make.charAt(0).toUpperCase()+props.carObj.make.slice(1)} ${props.carObj.model.charAt(0).toUpperCase()+props.carObj.model.slice(1)}`}
+            {`${props.carObj.make.charAt(0).toUpperCase() + props.carObj.make.slice(1)} ${props.carObj.model.charAt(0).toUpperCase() + props.carObj.model.slice(1)}`}
           </Typography>
           <Typography sx={{
             gridColumn: '2/3',
             gridRow: '1/2'
           }}
-          variant="h5" color="text.secondary">
+            variant="h5" color="text.secondary">
             {`$${props.carObj.price}`}
           </Typography>
-          <Typography 
-          sx={{
-            gridColumn: '2/3',
-            gridRow: '2/3'
-          }}
-          variant="body2" color="text.secondary">
+          <Typography
+            sx={{
+              gridColumn: '2/3',
+              gridRow: '2/3'
+            }}
+            variant="body2" color="text.secondary">
             {`${props.carObj.mileage} mileage`}
           </Typography>
-          <Typography 
-          sx={{
-            gridColumn: '2/3',
-            gridRow: '3/4'
-          }}
-          variant="body2" color="text.secondary">
+          <Typography
+            sx={{
+              gridColumn: '2/3',
+              gridRow: '3/4'
+            }}
+            variant="body2" color="text.secondary">
             {`Year: ${props.carObj.year}`}
           </Typography>
-          <Typography 
-          sx={{
-            gridColumn: '2/3',
-            gridRow: '4/5'
-          }}
-          variant="body2" color="text.secondary">
+          <Typography
+            sx={{
+              gridColumn: '2/3',
+              gridRow: '4/5'
+            }}
+            variant="body2" color="text.secondary">
             {`ZIP: ${props.carObj.zip}`}
           </Typography>
         </CardContent>
