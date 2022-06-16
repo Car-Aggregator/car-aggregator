@@ -11,12 +11,12 @@ const App = () => (
         <Routes>
             <Route
                 path="/"
-                element={<CarsInfo />}
-            />
-            {/* <Route
-                exact path="/signin"
                 element={<SignIn />}
-            /> */}
+            />
+            <Route
+                exact path="/home"
+                element={<CarsInfo/>}
+            />
         </Routes>
     </div>
 );
