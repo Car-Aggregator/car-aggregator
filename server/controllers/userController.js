@@ -32,7 +32,7 @@ userController.createUser = async (req, res, next) => {
     const queryValues = [email, password];
     const user = await db.query(queryStr, queryValues);
     res.locals.user = user.rows;
-    console.log("user-->", user);
+    // console.log('user-->', user)
     return next();
   } catch (err) {
     return next({
