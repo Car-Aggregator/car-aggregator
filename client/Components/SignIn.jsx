@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import axios from "axios";
 import "../styles/styles.scss";
 import React, { useState } from "react";
@@ -44,34 +43,30 @@ function SignIn() {
 
   return (
     <>
-    <div className="container">
-    <Box className="loginBox">
-      <TextField
-        onChange={(e) => setEmail(e.target.value)}
-        id="outlined-basic"
-        label="Email"
-        variant="outlined"
-      />
-      <TextField
-        onChange={(e) => setPassword(e.target.value)}
-        id="outlined-basic"
-        label="Password"
-        variant="outlined"
-      />
-      <Button variant="contained" color="success" onClick={signUp}>
-        Sign Up
-      </Button>
-      <Button variant="contained" color="success" onClick={login}>
-        Login
-      </Button>
-      </Box>
+      <div className="container">
+        <Box className="loginBox">
+          <TextField
+            onChange={(e) => setEmail(e.target.value)}
+            id="outlined-basic"
+            label="Email"
+            variant="outlined"
+          />
+          <TextField
+            onChange={(e) => setPassword(e.target.value)}
+            id="outlined-basic"
+            label="Password"
+            variant="outlined"
+          />
+          <Button variant="contained" color="success" onClick={signUp}>
+            Sign Up
+          </Button>
+          <Button variant="contained" color="success" onClick={login}>
+            Login
+          </Button>
+        </Box>
       </div>
     </>
   );
 }
 
 export default SignIn;
-=======
-import React from "react";
-import axios from "axios";
->>>>>>> max
