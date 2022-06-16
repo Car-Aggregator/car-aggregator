@@ -12,7 +12,7 @@ Router.delete('/removefavorite', favoritesController.removeFavorite, (req, res) 
   return res.status(200).json('favorited car successfully removed');
 })
 
-Router.get('/', favoritesController.getFavorites, (req, res) => {
+Router.post('/', favoritesController.getFavorites, (req, res) => {
   console.log('about to complete response to client from getFavorites router');
   return res.status(200).json(res.locals.favorites);
 })

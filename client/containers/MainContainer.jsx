@@ -19,8 +19,8 @@ const MainContainer = () => {
           <Link to="/">
             <Tab label="Home Page" />
           </Link>
-          <Link to={"/trends"}>
-            <Tab label="Trends" />
+          <Link to={"/favorites"}>
+            <Tab label="Favorites" />
           </Link>
         </Tabs>
       </Box>

@@ -6,14 +6,14 @@ import CarsCard from './CarsCard';
 import Typography from '@mui/material/Typography';
 
 export default function CarsList(props) {
-  console.log('carsArr', props)
+  console.log('carsArr', props) // seems that the email is not being sent 
 
   const carsItems = [];
 
   props.carsArr.forEach(
     car => {
       carsItems.push(<ListItem>
-        <CarsCard carObj={car} />
+        <CarsCard carObj={car} userState={props.userState} />
       </ListItem>)
     }
   )

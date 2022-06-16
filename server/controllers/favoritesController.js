@@ -21,7 +21,8 @@ favoritesController.saveCar = async (req, res, next) => {
       favoritedValues.push(user_id);
       db.query(insertFav, favoritedValues).then(carInfo => {
         //IF you want an array take out the [0]
-        res.locals.favoritedCar = carInfo[0].rows; // need to send back the 
+        console.log('carInfO: ', carInfo.rows[carInfo.rows.length-1]);
+        res.locals.favoritedCar = carInfo.rows[carInfo.rows.length -1].id; // need to send back the row id
         console.log('res.locals.favoritedCar: ', res.locals.favoritedCar);
         return next();
       })
@@ -37,6 +38,7 @@ favoritesController.saveCar = async (req, res, next) => {
 
 favoritesController.getFavorites = async (req, res, next) => {
   const { email } = req.body;
+  console.log('in get favorites--->',email)
 
   try {
     const findUser = 'SELECT id FROM users WHERE email=$1'
